@@ -1,0 +1,29 @@
+{
+   "name": "getgit",
+   "version": "1.0.0",
+   "description": "",
+   "main": "index.js",
+   "scripts": {
+      "dev": "nodemon index.js",
+      "start": "node index.js",
+      "tailwind": "npx tailwindcss -i ./styles/tailwind.config.css -o ./styles/tailwind.css --watch"
+   },
+   "repository": {
+      "type": "git",
+      "url": "git+https://github.com/hazik-khalid/GetGit.git"
+   },
+   "keywords": [],
+   "author": "",
+   "license": "GPL-3.0-or-later",
+   "bugs": {
+      "url": "https://github.com/hazik-khalid/GetGit/issues"
+   },
+   "homepage": "https://github.com/hazik-khalid/GetGit#readme",
+   "devDependencies": {
+      "dotenv": "^16.4.1",
+      "nodemon": "^3.0.3"
+   },
+   "dependencies": {
+      "@slack/bolt": "^3.17.1"
+   }
+}
