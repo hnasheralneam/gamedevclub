@@ -1,29 +1,20 @@
 {
-   "name": "getgit",
-   "version": "1.0.0",
+   "name": "gamedevclub",
+   "version": "0.1.0",
    "description": "",
-   "main": "index.js",
+   "main": "none.js",
    "scripts": {
-      "dev": "nodemon index.js",
-      "start": "node index.js",
-      "tailwind": "npx tailwindcss -i ./styles/tailwind.config.css -o ./styles/tailwind.css --watch"
+      "start": "npx tailwindcss -i ./styles/tailwind.config.css -o ./styles/tailwind.css --watch"
    },
    "repository": {
       "type": "git",
-      "url": "git+https://github.com/hazik-khalid/GetGit.git"
+      "url": "git+https://github.com/hnasheralneam/gamedevclub.git"
    },
    "keywords": [],
-   "author": "",
+   "author": "Hamza Nasher-Alneam",
    "license": "GPL-3.0-or-later",
    "bugs": {
-      "url": "https://github.com/hazik-khalid/GetGit/issues"
+      "url": "https://github.com/hnasheralneam/gamedevclub/issues"
    },
-   "homepage": "https://github.com/hazik-khalid/GetGit#readme",
-   "devDependencies": {
-      "dotenv": "^16.4.1",
-      "nodemon": "^3.0.3"
-   },
-   "dependencies": {
-      "@slack/bolt": "^3.17.1"
-   }
+   "homepage": "https://github.com/hnasheralneam/gamedevclub#readme"
 }
