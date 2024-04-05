@@ -45,11 +45,16 @@
    pointer-events: none;
    border-radius: 100%;
    background-color: white;
+   filter: drop-shadow(0 0 2px #eee);
    transition: transform 1s ease-in-out;
 }
 
 .cursor-trail {
+   display: block;
+   position: fixed;
+   pointer-events: none;
    z-index: 999;
+   filter: drop-shadow(0 0 2px #eee);
    animation: fading-star 1s forwards;
 }
 

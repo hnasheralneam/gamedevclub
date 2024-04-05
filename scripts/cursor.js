@@ -91,8 +91,6 @@ function duplicateCursor() {
 
    const duplicate = document.createElement("img");
    //set defaults
-   duplicate.style.display = "block";
-   duplicate.style.position = "fixed";
    duplicate.src = "assets/star.svg"
    duplicate.style.rotate = 0 + "rad";
    duplicate.style.scale = 1;
