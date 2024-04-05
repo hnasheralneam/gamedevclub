@@ -1,3 +1,6 @@
+// Check for mobile (or touch screen computer)
+const touchDevice = ("ontouchstart" in document.documentElement);
+
 // Create cursor
 const cursor = document.createElement("img");
 cursor.src = "assets/star.svg";
@@ -8,12 +11,15 @@ document.body.appendChild(cursor);
 let x;
 let y;
 
-document.addEventListener("mousemove", (event) => {
-   x = event.clientX;
-   y = event.clientY;
-   updateCursor(x, y);
-   duplicateCursor();
-});
+if (!touchDevice) {
+   document.addEventListener("mousemove", (event) => {
+      x = event.clientX;
+      y = event.clientY;
+      updateCursor(x, y);
+      duplicateCursor();
+   });
+}
+
 
 function updateCursor(x, y) {
    cursor.style.left = x - 17.5 + "px";
@@ -21,13 +27,15 @@ function updateCursor(x, y) {
 }
 
 // Hide cursor on page exit
-document.body.addEventListener("mouseleave", () => {
-   cursor.style.display = "none";
-});
+if (!touchDevice) {
+   document.body.addEventListener("mouseleave", () => {
+      cursor.style.display = "none";
+   });
 
-document.body.addEventListener("mouseenter", () => {
-   cursor.style.display = "block";
-});
+   document.body.addEventListener("mouseenter", () => {
+      cursor.style.display = "block";
+   });
+}
 
 // Cursor trail effect
 let duplicateCounter = 0;
@@ -56,6 +64,10 @@ slider.addEventListener("input", () => {
    // Opposite direction for user clarity
    duplicateTimeout = 6 - parseInt(slider.value);
 });
+
+if (touchDevice) {
+   document.querySelector(".slider-parent").style.display = "none";
+}
 
 // Potential improvement - make fade time a css var and let user change it
 
