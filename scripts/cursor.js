@@ -4,6 +4,9 @@ let cursorScale = 1;
 const preferedSize = 10;
 let cursorSize = [10, 10];
 
+// Check for mobile (or touch screen computer)
+const touchDevice = ("ontouchstart" in document.documentElement);
+
 // Create cursor
 const cursor = document.createElement("span");
 cursor.classList.add("cursor");
@@ -18,25 +21,30 @@ let x;
 let y;
 
 let mouseMoveTimer;
-document.addEventListener("mousemove", (event) => {
-   x = event.clientX;
-   y = event.clientY;
-   // use distance formula to determine how far the mouse moved
-   cursorDistanceTraveled = Math.sqrt(Math.pow(x - oldx, 2) + Math.pow(y - oldy, 2));
-   distanceCounter += cursorDistanceTraveled;
-   updateCursor(x, y);
-   duplicateCursor();
-   //reset mouse when its not moving
-   clearTimeout(mouseMoveTimer);
-   mouseMoveTimer = setTimeout(() => {
-      cursorDistanceTraveled = 0
+if (!touchDevice) {
+   document.addEventListener("mousemove", (event) => {
+      x = event.clientX;
+      y = event.clientY;
+     
+      // use distance formula to determine how far the mouse moved
+      cursorDistanceTraveled = Math.sqrt(Math.pow(x - oldx, 2) + Math.pow(y - oldy, 2));
+      distanceCounter += cursorDistanceTraveled;
+     
       updateCursor(x, y);
-   }, 100);
+      duplicateCursor();
+     
+      //reset mouse when its not moving
+      clearTimeout(mouseMoveTimer);
+      mouseMoveTimer = setTimeout(() => {
+         cursorDistanceTraveled = 0
+         updateCursor(x, y);
+      }, 100);
 
-   // now grab the old x and y so they are ready for the next frame
-   oldx = x
-   oldy = y
-});
+      // now grab the old x and y so they are ready for the next frame
+      oldx = x
+      oldy = y
+   });
+}
 
 function updateCursor(x, y) {
    /* QUICK OVERVIEW //
@@ -61,13 +69,15 @@ function updateCursor(x, y) {
 }
 
 // Hide cursor on page exit
-document.body.addEventListener("mouseleave", () => {
-   cursor.style.display = "none";
-});
+if (!touchDevice) {
+   document.body.addEventListener("mouseleave", () => {
+      cursor.style.display = "none";
+   });
 
-document.body.addEventListener("mouseenter", () => {
-   cursor.style.display = "block";
-});
+   document.body.addEventListener("mouseenter", () => {
+      cursor.style.display = "block";
+   });
+}
 
 // Cursor trail effect
 let distanceCounter = 0;
@@ -105,6 +115,10 @@ const starCount = document.getElementById("star-count");
 slider.addEventListener("input", () => {
    distanceThreshold = 70 - parseInt(slider.value) * 10;
 });
+
+if (touchDevice) {
+   document.querySelector(".slider-parent").style.display = "none";
+}
 
 // Potential improvement - make fade time a css var and let user change it
 
