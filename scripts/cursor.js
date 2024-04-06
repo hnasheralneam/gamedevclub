@@ -12,7 +12,9 @@ const cursor = document.createElement("span");
 cursor.classList.add("cursor");
 cursor.style.width = cursorSize[0] + "px";
 cursor.style.height = cursorSize[1] + "px";
-document.body.appendChild(cursor);
+if (!touchDevice) {
+   document.body.appendChild(cursor);
+}
 
 // Move cursor
 let oldx;
@@ -91,9 +93,10 @@ function duplicateCursor() {
 
    const duplicate = document.createElement("img");
    //set defaults
-   duplicate.src = "assets/star.svg"
-   duplicate.style.rotate = 0 + "rad";
-   duplicate.style.scale = 1;
+
+   const isRoot = location.pathname == "/" || (window.location.href.indexOf("index") > -1);
+   duplicate.src = isRoot ? "assets/star.svg" : "../assets/star.svg";
+
    //randomize position and scale depending on velocity
    duplicate.style.left = x - (cursorSize[0] / 2) + (Math.random() - 0.5) * (25 + cursorDistanceTraveled) + "px";
    duplicate.style.top = y - (cursorSize[1] / 2) + (Math.random() - 0.5) * (25 + cursorDistanceTraveled) + "px";
@@ -108,14 +111,15 @@ function duplicateCursor() {
 
 // Change amount of cursor stars
 const slider = document.getElementById("star-slider");
-const starCount = document.getElementById("star-count");
 
-slider.addEventListener("input", () => {
-   distanceThreshold = 70 - parseInt(slider.value) * 10;
-});
+if (slider) {
+   slider.addEventListener("input", () => {
+      distanceThreshold = 70 - parseInt(slider.value) * 10;
+   });
 
-if (touchDevice) {
-   document.querySelector(".slider-parent").style.display = "none";
+   if (touchDevice) {
+      document.querySelector(".slider-parent").style.display = "none";
+   }
 }
 
 // Potential improvement - make fade time a css var and let user change it

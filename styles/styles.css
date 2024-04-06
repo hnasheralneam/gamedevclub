@@ -46,7 +46,6 @@
    border-radius: 100%;
    background-color: white;
    filter: drop-shadow(0 0 2px #eee);
-   transition: transform 1s ease-in-out;
 }
 
 .cursor-trail {
