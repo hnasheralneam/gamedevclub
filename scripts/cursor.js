@@ -94,7 +94,7 @@ function duplicateCursor() {
    const duplicate = document.createElement("img");
    //set defaults
 
-   const isRoot = location.pathname == "/" || (window.location.href.indexOf("index") > -1);
+   const isRoot = location.pathname == "/" || location.pathname == "/gamedevclub/" || (window.location.href.indexOf("index") > -1);
    duplicate.src = isRoot ? "assets/star.svg" : "../assets/star.svg";
 
    //randomize position and scale depending on velocity
