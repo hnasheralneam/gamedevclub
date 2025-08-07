@@ -3,6 +3,7 @@
 let cursorScale = 1;
 const preferedSize = 10;
 let cursorSize = [10, 10];
+let sizeVariability = 50; // star size variability, from slider (10-100)
 
 // Check for mobile (or touch screen computer)
 const touchDevice = ("ontouchstart" in document.documentElement);
@@ -27,14 +28,14 @@ if (!touchDevice) {
    document.addEventListener("mousemove", (event) => {
       x = event.clientX;
       y = event.clientY;
-     
+
       // use distance formula to determine how far the mouse moved
       cursorDistanceTraveled = Math.sqrt(Math.pow(x - oldx, 2) + Math.pow(y - oldy, 2));
       distanceCounter += cursorDistanceTraveled;
-     
+
       updateCursor(x, y);
       duplicateCursor();
-     
+
       //reset mouse when its not moving
       clearTimeout(mouseMoveTimer);
       mouseMoveTimer = setTimeout(() => {
@@ -65,7 +66,7 @@ function updateCursor(x, y) {
 
    cursor.style.scale = cursorScale;
    cursor.style.width = cursorSize[0] + "px";
-   cursor.style.height = cursorSize[1] + "px"; 
+   cursor.style.height = cursorSize[1] + "px";
    cursor.style.left = (x + oldx) / 2 - (cursorSize[0] / 2) + "px";
    cursor.style.top = (y + oldy) / 2 - (cursorSize[1] / 2) + "px";
 }
@@ -100,8 +101,13 @@ function duplicateCursor() {
    //randomize position and scale depending on velocity
    duplicate.style.left = x - (cursorSize[0] / 2) + (Math.random() - 0.5) * (25 + cursorDistanceTraveled) + "px";
    duplicate.style.top = y - (cursorSize[1] / 2) + (Math.random() - 0.5) * (25 + cursorDistanceTraveled) + "px";
-   duplicate.style.width = 16 + (Math.random() - 0.5) * 12 + "px";
-   duplicate.style.height = 16 +(Math.random() - 0.5) * 12 + "px";
+
+   const baseSize = 16;
+   // Scale the slider value (10-100) to a reasonable pixel range for variability.
+   const effectiveVariability = sizeVariability / 100 * 30; // e.g., slider at 50 -> 15px variability
+   const size = baseSize + (Math.random() - 0.5) * effectiveVariability;
+   duplicate.style.width = size + "px";
+   duplicate.style.height = size + "px";
    duplicate.classList.add("cursor-trail");
    setTimeout(() => {
       duplicate.remove();
@@ -110,19 +116,25 @@ function duplicateCursor() {
 }
 
 // Change amount of cursor stars
-const slider = document.getElementById("star-slider");
+const frequencySlider = document.querySelector("#star-slider");
+const sizeSlider = document.querySelector("#size-slider");
 
-if (slider) {
-   slider.addEventListener("input", () => {
-      distanceThreshold = 70 - parseInt(slider.value) * 10;
+if (frequencySlider && sizeSlider) {
+   frequencySlider.addEventListener("input", () => {
+      distanceThreshold = parseInt(frequencySlider.value);
+   });
+   sizeSlider.addEventListener("input", () => {
+      sizeVariability = parseInt(sizeSlider.value);
    });
 
    if (touchDevice) {
-      document.querySelector(".slider-parent").style.display = "none";
+      // Hide both sliders on touch devices
+      document.querySelectorAll(".slider-parent").forEach(el => el.style.display = "none");
    }
 }
 
 // Potential improvement - make fade time a css var and let user change it
+//                       - make size difference a slider
 
 // Cursor over links effect
 const links = document.querySelectorAll("a");
